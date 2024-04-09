@@ -1,3 +1,27 @@
+@font-face {
+	font-family: 'Dangrek';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Dangrek'), url(http://themes.googleusercontent.com/static/fonts/dangrek/v5/LOaFhBT-EHNxZjV8DAW_ew.ttf) format('truetype');
+  }
+
 :root {
-	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	font-family: 'Dangrek', sans-serif;
+	--color-background-upper-gradient: #2d2d2d;
+	--color-background-lower-gradient: #141414;
+	--color-vh-primary: #00c8c8;
+	--color-vh-secondary: #ff6b6b;
+	--color-vh-tertiary: #9b59b6;
+	--color-light-gray: #f2f2f2;
+	--color-pink: #ff69b4;
+	--color-purple: #8e44ad;
+	--color-dark-blue: #3498db;
+	--color-blue: #1abc9c;
+}
+
+
+.transition-all {
+	transition-property: all;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-duration: 150ms;
 }

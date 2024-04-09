@@ -1,24 +1,30 @@
 import QuoteBox from "/components/quote";
 import quote from "/quotebook.png"
 import "./App.css";
+import Navbar from "../components/navbar";
+import { useEffect, useState } from "react";
 
 function App() {
+	const [quotes, setQuotes] = useState([]);
+
+	useEffect(() => {
+		getQuotes();
+	}, []);
 
 	const getQuotes = async () => {
 		const response = await fetch("/api/quotesdb");
 		const data = await response.json();
-		console.log(data);
-		return data;
+		setQuotes(data);
 	}
 
 	return (
 		<div className="App">
-			{/* TODO: include an icon for the quote book */}
-			<img src={quote} alt="quote" />
-			<h1>Hack at UCI's QuoteBook</h1>
+			<div className="hero">
+				<img src={quote} alt="quote" height={60} />
+				<h1 style={{padding: 20}}>Hack at UCI's QuoteBook</h1>
+			</div>
 
 			<h2>Submit a quote</h2>
-			{/* TODO: implement custom form submission logic to not refresh the page */}
 			<form onSubmit={(e) => {e.preventDefault(); console.log("HI");}}>
 				<label htmlFor="input-name">Name</label>
 				<input type="text" name="name" id="input-name" required />
@@ -28,9 +34,12 @@ function App() {
 			</form>
 
 			<h2>Previous Quotes</h2>
-			{/* TODO: Display the actual quotes from the database */}
 			<div className="messages">
-				<QuoteBox name="John Doe" message={"Testing"} />
+				{   
+					quotes.map((quote, index) => {
+						return <QuoteBox key={index} name={quote.name} message={quote.message} />
+					})
+				}
 			</div>
 		</div>
 	);

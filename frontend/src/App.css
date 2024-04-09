@@ -1,4 +1,16 @@
 
 .App { 
-    text-align: center; 
+    min-height: 100vh;
+    color: #fff;
+    background-image: linear-gradient(to bottom, var(--color-vh-tertiary), var(--color-vh-primary));
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+}
+
+.hero {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
