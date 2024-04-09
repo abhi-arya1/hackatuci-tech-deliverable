@@ -2,7 +2,7 @@ import "./styles/quote.css";
 import { motion } from "framer-motion"
 import { useState } from "react";
 
-const QuoteBox = ({ name, message }) => {
+const QuoteBox = ({ name, message, time }) => {
     const [style, setStyle] = useState({});
 
     const updateStyle = () => {
@@ -15,6 +15,8 @@ const QuoteBox = ({ name, message }) => {
         setStyle({});
     }
 
+    const _time = new Date(time).toLocaleString();
+
     return (
         <motion.div 
             initial={{ opacity: 0 }}
@@ -24,7 +26,7 @@ const QuoteBox = ({ name, message }) => {
             onHoverStart={updateStyle}
             onHoverEnd={removeStyle}
         >
-            {name}: {message}
+            {name}: {message} -- {_time}
         </motion.div>
     )
 }
