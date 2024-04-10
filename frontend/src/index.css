@@ -25,3 +25,11 @@ body,
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 	transition-duration: 150ms;
 }
+
+.shadowed-text {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+}
+
+.less-shadowed-text {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
+}

@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Varela';
-    src: url('../public/VarelaRound-Regular.ttf') format('truetype');
+    src: url('/VarelaRound-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
   }
@@ -51,6 +51,7 @@
     color: #333;
     background-color: #f8f8f8;
     transition: border-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
   }
   
   .input-message:focus {
@@ -63,3 +64,9 @@
     color: #999;
     font-style: italic;
   }
+
+
+.typed-string { 
+  font-size: 24px;
+  padding-bottom: 10px;
+}

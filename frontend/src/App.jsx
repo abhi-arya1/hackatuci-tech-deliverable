@@ -1,26 +1,30 @@
 import QuoteBox from "/components/quote";
 import quote from "/quotebook.png"
-import "./App.css";
 import Button from "../components/ui/button";
-import { useEffect, useState } from "react";
 import DateSlider from "../components/timepicker";
+import Typewriter from 'typewriter-effect';
+import { useEffect, useState } from "react";
+import "./App.css";
+
 
 function App() {
+	// STATES ////////////////////////////////////
 	const [quotes, setQuotes] = useState([]);
 	const [dates, setDates] = useState([]); 
 	const [selectedDate, setSelectedDate] = useState('');
 	const [name, setName] = useState(''); 
 	const [message, setMessage] = useState(''); 
+	const [filteredQuotes, setFilteredQuotes] = useState([]); 
+	const [search, setSearch] = useState('');
 
-	useEffect(() => {
-		if (selectedDate === '') {
-			getQuotes('');
-		} else { 
-			getQuotes(selectedDate.toISOString());
-		}
-	}, [selectedDate, setSelectedDate])
+	// FUNCTIONS /////////////////////////////////
 
-	const getQuotes = async (dateISO) => {
+	/**
+	 * getQuotes - Fetches all quotes, or filters by dates with the dateISO parameter
+	 * @param {*} dateISO '' if not filtering by date, else the date's ISO string
+	 * @param {*} updateDates true if sending a new quote/updating dates, else false 
+	 */
+	const getQuotes = async (dateISO, updateDates) => {
 		try {
 			let response; 
 			if (dateISO !== '') {
@@ -32,7 +36,7 @@ function App() {
             	const data = await response.json();
 				const _quotes = [...data].sort((a, b) => new Date(b.time) - new Date(a.time))
             	setQuotes(_quotes);
-				if (dateISO === '') {
+				if (dateISO === '' && updateDates) {
 					setDates([..._quotes.map(quote => quote.time)]
 								.sort((a, b) => new Date(b.time) - new Date(a.time))
 								.reverse()
@@ -47,6 +51,10 @@ function App() {
         }
 	}
 
+	/**
+	 * Handles quote submission
+	 * @param {*} e The mouse event that submits the quote's form
+	 */
 	const submitQuote = async (e) => {
 		e.preventDefault()
         try {
@@ -63,21 +71,51 @@ function App() {
             }
             setName('');
             setMessage('');
-			getQuotes('');
+			getQuotes('', true);
         } catch (error) {
             console.error("Quote Submission Failed:", error);
         }
     };
 
+	// HOOKS  //////////////////////////////////////
+	useEffect(() => {
+			setFilteredQuotes(
+				quotes.filter(quote => quote.message.toLowerCase().includes(search.toLowerCase()) || 
+				quote.name.toLowerCase().includes(search.toLowerCase()))
+			);
+		}, [search, quotes]); 
 
+	useEffect(() => {
+		if (selectedDate === '') {
+			getQuotes('', true);
+		} else { 
+			getQuotes(selectedDate.toISOString(), false);
+		}
+	}, [selectedDate, setSelectedDate])
+
+	// RENDER //////////////////////////////////////
 	return (
 		<div className="App">
 			<div className="hero">
-				<img src={quote} alt="quote" height={60} />
-				<h1 style={{padding: 20}}>Hack at UCI's QuoteBook</h1>
+				<img 
+					src={quote} 
+					alt="quote" 
+					height={60} 
+				/>
+				<h1 style={{padding: 20}} className="less-shadowed-text">Hack at UCI's QuoteBook</h1>
 			</div>
 
-			<h2>Add your Quote</h2>
+			<div className="typed-string less-shadowed-text">
+				<Typewriter
+					onInit={(typewriter) => {
+						typewriter.typeString('<span>Add your Quote!</span>')
+						.start();
+					}}
+					options={{
+						stringClassName: 'typed-string',
+					}}
+				/>
+			</div>
 			<form 
 				id="quoteform" 
 				onSubmit={submitQuote}
@@ -88,7 +126,7 @@ function App() {
 					justifyContent: "center",
 				}}
 			>
-				<label htmlFor="input-name" className="label">Name</label>
+				<label htmlFor="input-name" className="label less-shadowed-text">Name</label>
 				<input 
 					type="text" 
 					name="name" 
@@ -99,7 +137,7 @@ function App() {
 					placeholder="Your Name..."
 					className="input-message"
 				/>
-				<label htmlFor="input-message" className="label">Quote</label>
+				<label htmlFor="input-message" className="label less-shadowed-text">Quote</label>
 				<input 
 					type="text" 
 					name="message" 
@@ -121,20 +159,40 @@ function App() {
 				alignItems: "center",
 				columnGap: "30px",
 			}}>
-				<h2>Previous Quotes</h2>
+				<h2 className="less-shadowed-text">Previous Quotes</h2>
 				<DateSlider 
 					dates={dates} 
 					selectedDate={selectedDate}
 					setSelectedDate={setSelectedDate}
 				/>
+				<input 
+					type="text" 
+					name="message" 
+					id="input-message" 
+					value={search} 
+					required 
+					onChange={(e) => {setSearch(e.target.value);}} 
+					placeholder="Search by Name or Message"
+					className="input-message"
+					style={{
+						fontSize: '12px', 
+						padding: '8px',
+						width: '183px'
+					}}
+				/>
 			</div>
+
 			<div className="grid-container" style={{alignItems: "center", justifyContent: "center"}}>
 				{   
-					quotes.map((quote, index) => {
+					filteredQuotes.map((quote, index) => {
 						return <QuoteBox key={index} name={quote.name} message={quote.message} time={quote.time} />
 					})
 				}
 			</div>
+			
+			<footer style={{paddingTop: '20px'}}>
+				<p className="less-shadowed-text">Made with ❤️ for Hack At UCI, by Abhigyan Arya</p>
+			</footer>
 		</div>
 	);
 }

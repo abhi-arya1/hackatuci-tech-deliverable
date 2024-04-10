@@ -1,5 +1,5 @@
 import * as Slider from '@radix-ui/react-slider';
-import React, { useState } from 'react';
+import React from 'react';
 import './styles/timepicker.css'
 
 const DateSlider = ({ dates, selectedDate, setSelectedDate }) => {
@@ -21,7 +21,7 @@ const DateSlider = ({ dates, selectedDate, setSelectedDate }) => {
       </Slider.Track>
       <Slider.Thumb className="SliderThumb" aria-label="DatePicker" />
     </Slider.Root>
-    {selectedDate.toLocaleString()}
+    <span className="less-shadowed-text">{selectedDate.toLocaleString()}</span>
     </div>
   );
 };

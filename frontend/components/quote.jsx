@@ -39,7 +39,7 @@ const QuoteBox = ({ name, message, time }) => {
                 whileHover="hover"
                 variants={variants} 
                 transition={{ type: "keyframes", stiffness: 300 }} 
-                className="quote"
+                className="quote less-shadowed-text"
             >
                 <div>
                     <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
