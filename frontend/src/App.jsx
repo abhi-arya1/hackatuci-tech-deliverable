@@ -5,6 +5,7 @@ import DateSlider from "../components/timepicker";
 import Typewriter from 'typewriter-effect';
 import { useEffect, useState } from "react";
 import "./App.css";
+import Footer from "../components/ui/footer";
 
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
             	const data = await response.json();
 				const _quotes = [...data].sort((a, b) => new Date(b.time) - new Date(a.time))
             	setQuotes(_quotes);
-				if (dateISO === '' && updateDates) {
+				if (dateISO === '' || updateDates) {
 					setDates([..._quotes.map(quote => quote.time)]
 								.sort((a, b) => new Date(b.time) - new Date(a.time))
 								.reverse()
@@ -78,6 +79,7 @@ function App() {
     };
 
 	// HOOKS  //////////////////////////////////////
+	// Search Hook 
 	useEffect(() => {
 			setFilteredQuotes(
 				quotes.filter(quote => quote.message.toLowerCase().includes(search.toLowerCase()) || 
@@ -85,7 +87,13 @@ function App() {
 			);
 		}, [search, quotes]); 
 
+	// Date Filtering Hook 
 	useEffect(() => {
+		/* 
+			It may be less api-intensive to do the data filtering on the frontend rather than on date selection, 
+			however the datepicker only renders updated dates when you lift your mouse for efficiency and to meet
+			parameter query requirements - Abhi 
+		*/
 		if (selectedDate === '') {
 			getQuotes('', true);
 		} else { 
@@ -96,6 +104,8 @@ function App() {
 	// RENDER //////////////////////////////////////
 	return (
 		<div className="App">
+
+			{ /* HERO AREA + REQUIRED IMAGE  */ }
 			<div className="hero">
 				<img 
 					src={quote} 
@@ -105,6 +115,7 @@ function App() {
 				<h1 style={{padding: 20}} className="less-shadowed-text">Hack at UCI's QuoteBook</h1>
 			</div>
 
+			{ /* QUOTE ADDING TEXT */ }
 			<div className="typed-string less-shadowed-text">
 				<Typewriter
 					onInit={(typewriter) => {
@@ -116,6 +127,8 @@ function App() {
 					}}
 				/>
 			</div>
+
+			{ /* QUOTE ADDING FORM */ }
 			<form 
 				id="quoteform" 
 				onSubmit={submitQuote}
@@ -138,7 +151,7 @@ function App() {
 					className="input-message"
 				/>
 				<label htmlFor="input-message" className="label less-shadowed-text">Quote</label>
-				<input 
+				<textarea
 					type="text" 
 					name="message" 
 					id="input-message" 
@@ -147,11 +160,17 @@ function App() {
 					onChange={(e) => {setMessage(e.target.value);}} 
 					placeholder="Your Quote..."
 					className="input-message"
+					style={{
+						height: '37px',
+						minHeight: '37px', 
+						minWidth: '180px'
+					}}
 				/>
 				<div style={{padding: '8px'}}/>
 				<Button type="submit">Submit</Button>
 			</form>
 
+			{ /* PREVIOUS QUOTES/FILTERING DISPLAY */ }
 			<div style={{
 				display: "flex",
 				flexDirection: "row",
@@ -162,7 +181,6 @@ function App() {
 				<h2 className="less-shadowed-text">Previous Quotes</h2>
 				<DateSlider 
 					dates={dates} 
-					selectedDate={selectedDate}
 					setSelectedDate={setSelectedDate}
 				/>
 				<input 
@@ -177,11 +195,12 @@ function App() {
 					style={{
 						fontSize: '12px', 
 						padding: '8px',
-						width: '183px'
+						width: '185px'
 					}}
 				/>
 			</div>
-
+			
+			{ /* QUOTE DISPLAY AREA */ }
 			<div className="grid-container" style={{alignItems: "center", justifyContent: "center"}}>
 				{   
 					filteredQuotes.map((quote, index) => {
@@ -190,9 +209,8 @@ function App() {
 				}
 			</div>
 			
-			<footer style={{paddingTop: '20px'}}>
-				<p className="less-shadowed-text">Made with ❤️ for Hack At UCI, by Abhigyan Arya</p>
-			</footer>
+			{ /* FOOTER */ }
+			<Footer />
 		</div>
 	);
 }

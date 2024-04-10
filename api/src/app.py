@@ -62,7 +62,6 @@ def get_quotes(date_iso: str="") -> list[Quote]:
             for quote in database["quotes"]:
                 quote_time = datetime.fromisoformat(quote["time"])
                 quote_time = quote_time.replace(tzinfo=timezone(offset=timedelta(hours=-8))) 
-                print(quote_time, time) 
                 if quote_time >= time:
                     quotes.append(quote)
         return quotes

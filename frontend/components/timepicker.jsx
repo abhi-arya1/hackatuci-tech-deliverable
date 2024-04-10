@@ -1,19 +1,43 @@
 import * as Slider from '@radix-ui/react-slider';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles/timepicker.css'
 
-const DateSlider = ({ dates, selectedDate, setSelectedDate }) => {
-  const handleSlideChange = (val) => {
-    setSelectedDate(new Date(dates[val[0]]));
+const INVALID = 'Invalid Date'
+
+const DateSlider = ({ dates, setSelectedDate }) => {
+  const [tempVal, setTempVal] = useState([0]);
+  const [viewDate, setViewDate] = useState(new Date(dates[0]));
+  const handleSlideChange = () => {
+    setSelectedDate(new Date(dates[tempVal[0]]));
   };
 
   return (
-    <div>
+    <div style={{
+      paddingTop: '15px',
+      paddingBottom: '15px'
+    }}>
+      { viewDate.toLocaleString() === INVALID ? (
+        <span 
+        className="less-shadowed-text"
+        >
+          Showing all posts
+        </span>
+      ) : (
+        <span 
+        className="less-shadowed-text"
+        >
+          Showing posts on and after: 
+        </span>
+      )}
       <Slider.Root 
         className="SliderRoot" 
         defaultValue={[0]}
         max={dates.length - 1} 
-        onValueChange={handleSlideChange}
+        onValueChange={(val) => {
+          setTempVal(val);
+          setViewDate(new Date(dates[val[0]]));
+        }}
+        onPointerUp={handleSlideChange}
         aria-label="Date slider"
       >
       <Slider.Track className="SliderTrack">
@@ -21,7 +45,14 @@ const DateSlider = ({ dates, selectedDate, setSelectedDate }) => {
       </Slider.Track>
       <Slider.Thumb className="SliderThumb" aria-label="DatePicker" />
     </Slider.Root>
-    <span className="less-shadowed-text">{selectedDate.toLocaleString()}</span>
+      { viewDate.toLocaleString() !== INVALID && (
+        <span 
+        className="less-shadowed-text"
+        >
+          {viewDate.toLocaleString()}
+        </span>
+        )
+      }
     </div>
   );
 };

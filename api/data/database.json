@@ -61,44 +61,9 @@
 			"time": "2023-09-22T22:00:00"
 		},
 		{
-			"name": "james",
-			"message": "hi, i'm james",
-			"time": "2024-04-10T11:17:29"
-		},
-		{
-			"name": "james jackson",
-			"message": "hi im james 2",
-			"time": "2024-04-10T11:17:51"
-		},
-		{
-			"name": "sadf",
-			"message": "xczv",
-			"time": "2024-04-10T11:18:43"
-		},
-		{
-			"name": "adsf",
-			"message": "asdf",
-			"time": "2024-04-10T14:18:55"
-		},
-		{
-			"name": "Hello ",
-			"message": "World",
-			"time": "2024-04-10T14:21:15"
-		},
-		{
-			"name": "Daniel",
-			"message": "Hello ",
-			"time": "2024-04-10T14:46:40"
-		},
-		{
-			"name": "Ivan",
-			"message": "Hello World",
-			"time": "2024-04-10T14:49:17"
-		},
-		{
-			"name": "fdsaf",
-			"message": "sadf",
-			"time": "2024-04-10T14:58:21"
+			"name": "Alan",
+			"message": "Alan is pretty cool!\n",
+			"time": "2024-04-10T16:25:50"
 		}
 	]
 }

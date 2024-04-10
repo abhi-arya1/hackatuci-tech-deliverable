@@ -45,6 +45,7 @@ const QuoteBox = ({ name, message, time }) => {
                     <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
                         <span style={{
                             fontSize: "1rem",
+                            paddingRight: '20px'
                         }}>{name}</span>
                         <span style={{
                             fontSize: "0.8rem",
