@@ -7,11 +7,11 @@
 
 :root {
 	font-family: 'Dangrek', sans-serif;
-	--color-background-upper-gradient: #2d2d2d;
-	--color-background-lower-gradient: #141414;
-	--color-vh-primary: #00c8c8;
-	--color-vh-secondary: #ff6b6b;
-	--color-vh-tertiary: #9b59b6;
+	--color-background-upper-gradient: #859398;
+	--color-background-lower-gradient: #283048;
+	--color-vh-primary: #4389A2;
+	--color-vh-secondary: #171a67;
+	--color-vh-tertiary: #5C258D;
 	--color-white: #f2f2f2;
 	--color-pink: #ff69b4;
 	--color-purple: #8e44ad;

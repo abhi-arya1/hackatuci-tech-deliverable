@@ -2,7 +2,7 @@
 .App { 
     min-height: 100vh;
     color: #fff;
-    background-image: linear-gradient(to bottom, var(--color-vh-tertiary), var(--color-vh-primary));
+    background-image: linear-gradient(to bottom, var(--color-vh-primary), var(--color-vh-tertiary));
     background-size: cover;
     background-repeat: no-repeat;
     text-align: center;
@@ -17,14 +17,13 @@
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Creates 3 columns */
-    gap: 10px; /* Adjust the gap between items as needed */
-    padding: 10px; /* Optional: Adds some padding around the grid */
+    grid-template-columns: repeat(4, 200px); 
+    gap: 10px; 
+    padding: 10px; 
 }
 
-.grid-item {
-    background-color: #f0f0f0; /* Light grey background for visibility */
-    border: 1px solid #ddd; /* Light grey border */
-    padding: 20px; /* Adds some padding inside each grid item */
-    text-align: center; /* Center the text inside the grid item */
+.label { 
+    padding-right: 8px;
+    font-weight: bold;
+    padding-left: 8px;
 }

@@ -1,10 +1,9 @@
 import QuoteBox from "/components/quote";
 import quote from "/quotebook.png"
 import "./App.css";
-import Navbar from "../components/navbar";
 import Button from "../components/ui/button";
 import { useEffect, useState } from "react";
-import DropdownMenuDemo from "../components/timepicker";
+import FilterMenu from "../components/timepicker";
 
 function App() {
 	const [quotes, setQuotes] = useState([]);
@@ -18,7 +17,7 @@ function App() {
 	const getQuotes = async () => {
 		const response = await fetch("/api/quotesdb");
 		const data = await response.json();
-		setQuotes(data);
+		setQuotes([...data].sort((a, b) => new Date(b.time) - new Date(a.time)));
 	}
 
 	const submitQuote = async (e) => {
@@ -50,18 +49,42 @@ function App() {
 				<h1 style={{padding: 20}}>Hack at UCI's QuoteBook</h1>
 			</div>
 
-			<h2>Submit a quote</h2>
+			<h2>Add your Quote</h2>
 			<form id="quoteform" onSubmit={submitQuote}>
-				<label htmlFor="input-name">Name</label>
-				<input type="text" name="name" id="input-name" value={name} required onChange={(e) => {setName(e.target.value)}} />
-				<label htmlFor="input-message">Quote</label>
-				<input type="text" name="message" id="input-message" value={message} required onChange={(e) => {setMessage(e.target.value);}} />
+				<label htmlFor="input-name" className="label">Name</label>
+				<input 
+					type="text" 
+					name="name" 
+					id="input-name" 
+					value={name} 
+					required 
+					onChange={(e) => {setName(e.target.value)}} 
+					placeholder="Your Name..."
+				/>
+				<label htmlFor="input-message" className="label">Quote</label>
+				<input 
+					type="text" 
+					name="message" 
+					id="input-message" 
+					value={message} 
+					required 
+					onChange={(e) => {setMessage(e.target.value);}} 
+					placeholder="Your Quote..."
+				/>
 				<Button type="submit">Submit</Button>
 			</form>
 
-			<h2>Previous Quotes</h2>
-			<DropdownMenuDemo />
-			<div className="messages">
+			<div style={{
+				display: "flex",
+				flexDirection: "row",
+				justifyContent: "center",
+				alignItems: "center",
+				columnGap: '0.5rem'
+			}}>
+				<h2>Previous Quotes</h2>
+				<FilterMenu />
+			</div>
+			<div className="grid-container" style={{alignItems: "center", justifyContent: "center"}}>
 				{   
 					quotes.map((quote, index) => {
 						return <QuoteBox key={index} name={quote.name} message={quote.message} time={quote.time} />

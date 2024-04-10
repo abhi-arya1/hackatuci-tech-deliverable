@@ -8,7 +8,7 @@ import {
 } from '@radix-ui/react-icons';
 import './styles/timepicker.css';
 
-const DropdownMenuDemo = () => {
+const FilterMenu = () => {
   const [bookmarksChecked, setBookmarksChecked] = React.useState(true);
   const [urlsChecked, setUrlsChecked] = React.useState(false);
   const [person, setPerson] = React.useState('pedro');
@@ -17,7 +17,7 @@ const DropdownMenuDemo = () => {
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <button className="IconButton" aria-label="Customise options">
-          Filter by
+          <HamburgerMenuIcon />
         </button>
       </DropdownMenu.Trigger>
 
@@ -104,4 +104,4 @@ const DropdownMenuDemo = () => {
   );
 };
 
-export default DropdownMenuDemo;
+export default FilterMenu;

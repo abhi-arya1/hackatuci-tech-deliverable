@@ -10,8 +10,7 @@ const Button = ({ children }) => {
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#violet-11',
-            backgroundColor: '#ff69b4',
+            backgroundColor: '#171a67',
             boxShadow: '0 2px 10px #black-a7',
         }}>
             {children}

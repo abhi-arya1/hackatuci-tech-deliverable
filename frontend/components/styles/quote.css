@@ -1,11 +1,24 @@
 
 .quote { 
-    color: red;
+    background-image: linear-gradient(to bottom, #7474BF, #348AC7);
+    background-size: cover;
+    background-repeat: no-repeat;
     font-size: 20px;
     font-weight: bold;
     text-align: center;
-    padding: 10px;
-    border: 1px solid black;
-    border-radius: 10px;
-    background-color: lightgrey;
+    align-items: center;
+    padding: 20px;
+    min-width: none; 
+    display: 'flex';
+    flex-direction: column;
+    margin: '0 auto';
+    border-radius: 1.5rem;
+    border-style: outset;
+    border-color:rgb(from color r g b)
 }
+
+.message-scroll {
+    max-height: 140px; 
+    overflow-y: auto; 
+    font-size: 1.1rem
+  }
