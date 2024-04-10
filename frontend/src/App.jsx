@@ -15,9 +15,17 @@ function App() {
 	}, [])
 
 	const getQuotes = async () => {
-		const response = await fetch("/api/quotesdb");
-		const data = await response.json();
-		setQuotes([...data].sort((a, b) => new Date(b.time) - new Date(a.time)));
+		try {
+            const response = await fetch('/api/quotesdb');
+            if (response.ok) {
+            	const data = await response.json();
+            	setQuotes([...data].sort((a, b) => new Date(b.time) - new Date(a.time)));
+            } else {
+            	throw new Error(response.status + ' ' + response.statusText);
+            }
+        } catch (error) {
+            console.error('Error fetching quotes:', error);
+        }
 	}
 
 	const submitQuote = async (e) => {
