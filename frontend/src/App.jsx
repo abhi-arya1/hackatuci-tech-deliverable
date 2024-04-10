@@ -3,23 +3,42 @@ import quote from "/quotebook.png"
 import "./App.css";
 import Button from "../components/ui/button";
 import { useEffect, useState } from "react";
-import FilterMenu from "../components/timepicker";
+import DateSlider from "../components/timepicker";
 
 function App() {
 	const [quotes, setQuotes] = useState([]);
+	const [dates, setDates] = useState([]); 
+	const [selectedDate, setSelectedDate] = useState('');
 	const [name, setName] = useState(''); 
 	const [message, setMessage] = useState(''); 
 
 	useEffect(() => {
-		getQuotes(); 
-	}, [])
+		if (selectedDate === '') {
+			getQuotes('');
+		} else { 
+			getQuotes(selectedDate.toISOString());
+		}
+	}, [selectedDate, setSelectedDate])
 
-	const getQuotes = async () => {
+	const getQuotes = async (dateISO) => {
 		try {
-            const response = await fetch('/api/quotesdb');
+			let response; 
+			if (dateISO !== '') {
+				response = await fetch('/api/quotesdb?date_iso=' + dateISO);
+			} else { 
+				response = await fetch('/api/quotesdb')
+			}
             if (response.ok) {
             	const data = await response.json();
-            	setQuotes([...data].sort((a, b) => new Date(b.time) - new Date(a.time)));
+				const _quotes = [...data].sort((a, b) => new Date(b.time) - new Date(a.time))
+            	setQuotes(_quotes);
+				if (dateISO === '') {
+					setDates([..._quotes.map(quote => quote.time)]
+								.sort((a, b) => new Date(b.time) - new Date(a.time))
+								.reverse()
+							);
+					setSelectedDate(new Date(_quotes[_quotes.length - 1].time)); 
+				}
             } else {
             	throw new Error(response.status + ' ' + response.statusText);
             }
@@ -44,11 +63,12 @@ function App() {
             }
             setName('');
             setMessage('');
-			getQuotes();
+			getQuotes('');
         } catch (error) {
             console.error("Quote Submission Failed:", error);
         }
     };
+
 
 	return (
 		<div className="App">
@@ -58,7 +78,16 @@ function App() {
 			</div>
 
 			<h2>Add your Quote</h2>
-			<form id="quoteform" onSubmit={submitQuote}>
+			<form 
+				id="quoteform" 
+				onSubmit={submitQuote}
+				style={{
+					display: "flex",
+					flexDirection: "row",
+					alignItems: "center",
+					justifyContent: "center",
+				}}
+			>
 				<label htmlFor="input-name" className="label">Name</label>
 				<input 
 					type="text" 
@@ -68,6 +97,7 @@ function App() {
 					required 
 					onChange={(e) => {setName(e.target.value)}} 
 					placeholder="Your Name..."
+					className="input-message"
 				/>
 				<label htmlFor="input-message" className="label">Quote</label>
 				<input 
@@ -78,7 +108,9 @@ function App() {
 					required 
 					onChange={(e) => {setMessage(e.target.value);}} 
 					placeholder="Your Quote..."
+					className="input-message"
 				/>
+				<div style={{padding: '8px'}}/>
 				<Button type="submit">Submit</Button>
 			</form>
 
@@ -87,10 +119,14 @@ function App() {
 				flexDirection: "row",
 				justifyContent: "center",
 				alignItems: "center",
-				columnGap: '0.5rem'
+				columnGap: "30px",
 			}}>
 				<h2>Previous Quotes</h2>
-				<FilterMenu />
+				<DateSlider 
+					dates={dates} 
+					selectedDate={selectedDate}
+					setSelectedDate={setSelectedDate}
+				/>
 			</div>
 			<div className="grid-container" style={{alignItems: "center", justifyContent: "center"}}>
 				{   

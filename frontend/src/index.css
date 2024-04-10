@@ -1,12 +1,4 @@
-@font-face {
-	font-family: 'Dangrek';
-	font-style: normal;
-	font-weight: 400;
-	src: local('Dangrek'), url(http://themes.googleusercontent.com/static/fonts/dangrek/v5/LOaFhBT-EHNxZjV8DAW_ew.ttf) format('truetype');
-  }
-
 :root {
-	font-family: 'Dangrek', sans-serif;
 	--color-background-upper-gradient: #859398;
 	--color-background-lower-gradient: #283048;
 	--color-vh-primary: #4389A2;
@@ -19,6 +11,14 @@
 	--color-blue: #1abc9c;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 
 .transition-all {
 	transition-property: all;

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from typing import TypedDict
 
 from fastapi import FastAPI, Form, status
@@ -48,8 +48,21 @@ def post_message(name: str = Form(), message: str = Form()) -> RedirectResponse:
 
 
 @app.get("/quotesdb")
-def get_quotes(max_age: str="") -> list[Quote]:
+def get_quotes(date_iso: str="") -> list[Quote]:
     """
     Retrieve all quotes from the database.
     """
+    if(date_iso):
+        time = datetime.fromisoformat(date_iso.replace("Z", "+00:00"))
+        if date_iso:
+            time = datetime.fromisoformat(date_iso.replace("Z", "+00:00"))
+            time = time.astimezone(timezone(offset=timedelta(hours=-8))) 
+
+            quotes = []
+            for quote in database["quotes"]:
+                quote_time = datetime.fromisoformat(quote["time"])
+                quote_time = quote_time.replace(tzinfo=timezone(offset=timedelta(hours=-8)))  
+                if quote_time >= time:
+                    quotes.append(quote)
+        return quotes
     return database["quotes"]
