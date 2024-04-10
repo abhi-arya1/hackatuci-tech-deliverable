@@ -1,0 +1,23 @@
+
+.customButton { 
+    background-image: linear-gradient(to bottom, #7474BF, #348AC7);
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: inherit;
+    align-items: center;
+    padding: 10px;
+    min-width: none; 
+    display: 'flex';
+    flex-direction: column;
+    margin: '0 auto';
+    border-radius: 16px;
+}
+
+.customButton:hover {
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-family: inherit;
+    background-color: #f8f8f8;
+    transition: border-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+}
